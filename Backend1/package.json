@@ -1,0 +1,16 @@
+{
+  "name": "projmanagement",
+  "version": "1.0.0",
+  "description": "a project management app for beginners",
+  "keywords": [
+    "backend",
+    "api"
+  ],
+  "license": "ISC",
+  "author": "mohit",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node index.js"
+  }
+}
