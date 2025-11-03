@@ -43,9 +43,16 @@ router.route("/c/:username").get(verifyJWT, getUserChannelProfile);
 router.route("/update-account").patch(verifyJWT, updateAccountDetails);
 
 // this may throw error
-router
-  .route("/avatar")
-  .patch(verifyJWT, upload.single("avatar"), updateUserAvatar);
+router.route("/avatar").patch(
+  verifyJWT,
+  upload.fields([
+    {
+      name: "avatar",
+      maxCount: 1,
+    },
+  ]),
+  updateUserAvatar
+);
 router
   .route("/cover-image")
   .patch(verifyJWT, upload.single("coverImage"), updateUserCoverImage);
