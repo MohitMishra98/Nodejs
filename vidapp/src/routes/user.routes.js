@@ -53,9 +53,16 @@ router.route("/avatar").patch(
   ]),
   updateUserAvatar
 );
-router
-  .route("/cover-image")
-  .patch(verifyJWT, upload.single("coverImage"), updateUserCoverImage);
+router.route("/cover-image").patch(
+  verifyJWT,
+  upload.fields([
+    {
+      name: "coverImage",
+      maxCount: 1,
+    },
+  ]),
+  updateUserCoverImage
+);
 
 router.route("/history").get(verifyJWT, getWatchHistory);
 
