@@ -42,7 +42,6 @@ router.route("/current-user").get(verifyJWT, getCurrentUser);
 router.route("/c/:username").get(verifyJWT, getUserChannelProfile);
 router.route("/update-account").patch(verifyJWT, updateAccountDetails);
 
-// this may throw error
 router.route("/avatar").patch(
   verifyJWT,
   upload.fields([
