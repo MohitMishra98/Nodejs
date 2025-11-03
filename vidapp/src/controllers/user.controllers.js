@@ -162,17 +162,16 @@ const loginUser = asyncHandler(async (req, res) => {
 });
 
 const logoutUser = asyncHandler(async (req, res) => {
-  await User.findByIdAndUpdate(
+  console.log(req.user);
+  const newUser = await User.findByIdAndUpdate(
     req.user._id,
     {
-      $set: {
-        refreshToken: undefined,
-      },
+      $unset: { refreshToken: 1 },
     },
-    {
-      new: true,
-    }
+    { new: true }
   );
+
+  console.log(newUser);
 
   const options = {
     httpOnly: true,
@@ -187,8 +186,9 @@ const logoutUser = asyncHandler(async (req, res) => {
 });
 
 const refreshAccessToken = asyncHandler(async (req, res) => {
-  console.log(req.body)
-  const incomingRefreshToken = req.cookies.refreshToken || req.body.refreshToken;
+  console.log(req.body);
+  const incomingRefreshToken =
+    req.cookies.refreshToken || req.body.refreshToken;
 
   try {
     const decodedToken = jwt.verify(
@@ -232,8 +232,9 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
 
 const changeCurrentPassword = asyncHandler(async (req, res) => {
   const { oldPassword, newPassword } = req.body;
+  console.log(oldPassword, newPassword, req?.user._id);
 
-  const user = await User.findById(req.body?._id);
+  const user = await User.findById(req?.user._id);
 
   const isPasswordValid = await user.isPasswordCorrect(oldPassword);
 
